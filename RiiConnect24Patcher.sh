@@ -178,13 +178,21 @@ number_2_1 () {
 
 detect_sd_card () {
     sdcard=null
-    for f in /Volumes/*/; do
-        if [ -d "$f/apps" ]; then
-            sdcard="$f"
-            echo "$sdcard"
-        fi
-    done
-
+    if [ "$machine" = "mac"]; then
+        for f in /Volumes/*/; do
+            if [ -d "$f/apps" ]; then
+                sdcard="$f"
+                echo "$sdcard"
+            fi
+        done
+    elif [ "$machine" = "linux"]; then
+        for f in "/media/$(whoami)/*/"; do
+            if [ -d "$f/apps" ]; then
+                sdcard="$f"
+                echo "$sdcard"
+            fi
+        done
+    fi
     number_2_1_summary
 }
 
